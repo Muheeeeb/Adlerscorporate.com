@@ -1,0 +1,687 @@
+<!-- collections.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections | ALDER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #c8a97e;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 8px 15px;
+            color: #fff;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        /* Hero Section */
+        .collections-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #c8a97e;
+            letter-spacing: 1px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #111;
+            padding: 20px 0;
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 0 40px;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c8a97e;
+            transition: width 0.3s;
+        }
+
+        .filter-btn:hover::after,
+        .filter-btn.active::after {
+            width: 100%;
+        }
+
+        .filter-btn.active {
+            color: #c8a97e;
+        }
+
+        /* Collections Grid */
+        .collections-grid {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .collection-card {
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .collection-image {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .collection-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .collection-card:hover .collection-image img {
+            transform: scale(1.1);
+        }
+
+        .collection-details {
+            padding: 20px;
+        }
+
+        .collection-category {
+            color: #c8a97e;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .collection-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .collection-price {
+            color: #c8a97e;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .shop-now-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #c8a97e;
+            color: #000;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+            border-radius: 4px;
+        }
+
+        .shop-now-btn:hover {
+            background: #fff;
+        }
+
+        @media (max-width: 1200px) {
+            .collections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 40px;
+            }
+
+            .filter-container {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 80px 0 40px;
+            padding: 0 20px;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #c8a97e;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #fff;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .surgical-card {
+            background: #111;
+            border: 1px solid rgba(200, 169, 126, 0.2);
+        }
+
+        .surgical-card .collection-description {
+            color: #ccc;
+            margin: 15px 0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(200, 169, 126, 0.1);
+            border-radius: 4px;
+        }
+
+        .product-features li {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .product-features li:before {
+            content: '•';
+            color: #c8a97e;
+            position: absolute;
+            left: 0;
+        }
+
+        .surgical-card .shop-now-btn {
+            width: 100%;
+            text-align: center;
+            background: #c8a97e;
+            border: none;
+            padding: 12px;
+            margin-top: 20px;
+        }
+
+        .surgical-card .shop-now-btn:hover {
+            background: #b69468;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .section-title p {
+                font-size: 16px;
+            }
+        }
+
+        /* Medical & Surgical Section */
+        .medical-section {
+            padding: 80px 0;
+            background: #0a0a0a;
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        .medical-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .medical-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: #c8a97e;
+            margin-bottom: 15px;
+        }
+
+        .medical-header p {
+            color: #fff;
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .medical-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .medical-card {
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .medical-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .medical-image {
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .medical-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .medical-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category {
+            color: #c8a97e;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .medical-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .specifications {
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .specifications ul {
+            list-style: none;
+            background: rgba(200, 169, 126, 0.1);
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .specifications li {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .specifications li:before {
+            content: '•';
+            color: #c8a97e;
+            position: absolute;
+            left: 0;
+        }
+
+        .inquire-btn {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background: #c8a97e;
+            color: #000;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .inquire-btn:hover {
+            background: #b69468;
+            color: #fff;
+        }
+
+        @media (max-width: 1200px) {
+            .medical-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .medical-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .medical-header h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="s.jpg" alt="Alder" class="logo-image">
+                <span class="logo-text">ALDER</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="collections.html">Collections</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="collections-hero">
+        <div class="hero-content">
+            <h1>Our Collections</h1>
+            <p>Discover our curated selection of premium clothing</p>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active">ALL</button>
+            <button class="filter-btn">NEW ARRIVALS</button>
+            <button class="filter-btn">CASUAL WEAR</button>
+            <button class="filter-btn">STREET STYLE</button>
+            <button class="filter-btn">BUSINESS</button>
+            <button class="filter-btn">ACCESSORIES</button>
+            <button class="filter-btn">MEDICAL EQUIPMENT</button>
+        </div>
+    </div>
+
+    <div class="collections-grid">
+        <!-- Collection Card 1 -->
+        <div class="collection-card">
+            <div class="collection-image">
+                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d" alt="Premium Jacket">
+            </div>
+            <div class="collection-details">
+                <p class="collection-category">New Arrival</p>
+                <h3 class="collection-title">Premium Leather Jacket</h3>
+                <p class="collection-price">$299</p>
+                <a href="#" class="shop-now-btn">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Collection Card 2 -->
+        <div class="collection-card">
+            <div class="collection-image">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f" alt="Casual Wear">
+            </div>
+            <div class="collection-details">
+                <p class="collection-category">Casual Wear</p>
+                <h3 class="collection-title">Urban Comfort Set</h3>
+                <p class="collection-price">$189</p>
+                <a href="#" class="shop-now-btn">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Collection Card 3 -->
+        <div class="collection-card">
+            <div class="collection-image">
+                <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04" alt="Business Attire">
+            </div>
+            <div class="collection-details">
+                <p class="collection-category">Business</p>
+                <h3 class="collection-title">Executive Suite</h3>
+                <p class="collection-price">$499</p>
+                <a href="#" class="shop-now-btn">Shop Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical & Surgical Section -->
+    <div class="medical-section">
+        <div class="medical-header">
+            <h2>Medical & Surgical Equipment</h2>
+            <p>Premium Quality Surgical Instruments</p>
+        </div>
+
+        <div class="medical-grid">
+            <!-- Medical Item 1 - T-Plate System -->
+            <div class="medical-card">
+                <div class="medical-image">
+                    <img src="m.jpeg" alt="T-Plate System">
+                </div>
+                <div class="medical-content">
+                    <span class="category">Orthopedic Instruments</span>
+                    <h3>T-Plate System</h3>
+                    <p class="description">Premium quality titanium T-plate system with locking mechanism. Ideal for fracture fixation.</p>
+                    <div class="specifications">
+                        <ul>
+                            <li>Medical Grade Titanium</li>
+                            <li>Purple Anodized Finish</li>
+                            <li>Locking Screw System</li>
+                            <li>Anatomically Designed</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <!-- Medical Item 2 - Locking Compression Plate -->
+            <div class="medical-card">
+                <div class="medical-image">
+                    <img src="WhatsApp Image 2025-01-21 at 10.39.27 PM.jpeg" alt="Locking Compression Plate">
+                </div>
+                <div class="medical-content">
+                    <span class="category">Orthopedic Instruments</span>
+                    <h3>Locking Compression Plate</h3>
+                    <p class="description">Advanced locking compression plate system with dynamic compression slots for optimal fracture treatment.</p>
+                    <div class="specifications">
+                        <ul>
+                            <li>Surgical Grade Stainless Steel</li>
+                            <li>Dynamic Compression Technology</li>
+                            <li>Low Profile Design</li>
+                            <li>Multiple Locking Options</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+
+            <!-- Medical Item 3 - Cannulated Screw System -->
+            <div class="medical-card">
+                <div class="medical-image">
+                    <img src="./WhatsApp Image 2025-01-21 at 10.38.53 PM.jpeg" alt="Cannulated Screw System">
+                </div>
+                <div class="medical-content">
+                    <span class="category">Orthopedic Instruments</span>
+                    <h3>Cannulated Screw System</h3>
+                    <p class="description">High-precision cannulated screw system for accurate placement and optimal compression in fracture fixation.</p>
+                    <div class="specifications">
+                        <ul>
+                            <li>Titanium Alloy Construction</li>
+                            <li>Self-Tapping Design</li>
+                            <li>Multiple Diameter Options</li>
+                            <li>Cannulated for Guide Wire</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="inquire-btn">Inquire Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Footer content -->
+    </footer>
+
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
